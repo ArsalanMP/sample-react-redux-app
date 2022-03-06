@@ -21,6 +21,9 @@ const App = () => {
             </Suspense>
           }
         >
+          <Route path="/" element={<>Table</>} />
+          <Route path="/gallery" element={<>Gallery</>} />
+          <Route path="/todolist" element={<>TodoList</>} />
         </Route>
       </Routes>
     </BrowserRouter>

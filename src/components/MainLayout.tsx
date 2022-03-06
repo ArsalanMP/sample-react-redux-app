@@ -1,8 +1,9 @@
 
-import { Navigate, useLocation } from "react-router-dom";
-import { Typography } from "@material-ui/core";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Box } from "@material-ui/core";
 import { useAppSelector } from "../app/hooks";
 import { authState } from "../features/auth/authSlice";
+import Drawer from "./Drawer";
 
 const MainLayout = () => {
   let location = useLocation();
@@ -15,7 +16,12 @@ const MainLayout = () => {
 
   return (
     <>
-      <Typography>this is my main</Typography>
+      <Box display="flex" width="100%" height="100%">
+        <Drawer />
+        <Box flex={1}>
+          <Outlet/>
+        </Box>
+      </Box>
     </>
   );
 };
