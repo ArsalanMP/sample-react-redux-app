@@ -1,17 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
-
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../../app/store';
 
 export interface MessageState {
   value: string;
 }
 
 const initialState: MessageState = {
-  value: "",
+  value: '',
 };
 
 const messageSlice = createSlice({
-  name: "message",
+  name: 'message',
   initialState,
   reducers: {
     setMessage: (state, action) => {
@@ -25,7 +24,7 @@ const messageSlice = createSlice({
 
 const { reducer, actions } = messageSlice;
 
-export const { setMessage, clearMessage } = actions
+export const { setMessage, clearMessage } = actions;
 
 export const message = (state: RootState) => state.message.value;
 

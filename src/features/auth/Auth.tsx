@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
-import { Box, Button, LinearProgress, TextField, Typography } from "@material-ui/core";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import logo from '../../logo.svg';
+import React, { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import {
-  authState,
-  loginAsync,
-} from './authSlice';
-import { IUserData } from "./interface";
+  Box,
+  Button,
+  LinearProgress,
+  TextField,
+  Typography,
+} from '@material-ui/core';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import logo from '../../logo.svg';
+import { authState, loginAsync } from './authSlice';
+import { IUserData } from './interface';
 
-import { clearMessage, message } from "../message/messageSlice";
+import { clearMessage, message } from '../message/messageSlice';
 
 const initialLoginData: IUserData = Object.freeze({
   username: '',
@@ -17,9 +20,9 @@ const initialLoginData: IUserData = Object.freeze({
 });
 
 const initialErrorState = Object.freeze({
-  apiError:'',
-  usernameError:'',
-  passwordError:''
+  apiError: '',
+  usernameError: '',
+  passwordError: '',
 });
 
 const Auth = () => {
@@ -29,26 +32,26 @@ const Auth = () => {
   const [formData, setFormData] = React.useState(initialLoginData);
   const [errors, setErrors] = useState(initialErrorState);
 
-  useEffect(()=>{
-    if( messageValue ) {
+  useEffect(() => {
+    if (messageValue) {
       dispatch(clearMessage());
-      setErrors({ ...errors,apiError: messageValue });
+      setErrors({ ...errors, apiError: messageValue });
     }
-  }, [messageValue])
+  }, [messageValue]);
 
-  if ( auth.user !== undefined ) {
+  if (auth.user !== undefined) {
     return <Navigate to="/" />;
   }
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    setErrors({ ...errors,apiError: '' });
+    setErrors({ ...errors, apiError: '' });
     const loginData: IUserData = {
       username: formData.username,
       password: formData?.password,
     };
-    
+
     dispatch(loginAsync(loginData));
   };
 
@@ -56,31 +59,37 @@ const Auth = () => {
     const data = e.target.value.trim();
     setFormData({
       ...formData,
-      username: data
+      username: data,
     });
-    if ( data === '') {
+    if (data === '') {
       setErrors({ ...errors, usernameError: 'Username is required' });
-    } else if ( data.length < 4 ) {
-      setErrors({ ...errors, usernameError: 'Username must have a minimum length of 4' });
+    } else if (data.length < 4) {
+      setErrors({
+        ...errors,
+        usernameError: 'Username must have a minimum length of 4',
+      });
     } else {
       setErrors({ ...errors, usernameError: '' });
     }
-  }
+  };
 
   const passwordOnChange = (e: any) => {
     const data = e.target.value.trim();
     setFormData({
       ...formData,
-      password: data
+      password: data,
     });
-    if ( data === '') {
+    if (data === '') {
       setErrors({ ...errors, passwordError: 'Password is required' });
-    } else if ( data.length < 5 ) {
-      setErrors({ ...errors, passwordError: 'Password must have a minimum length of 5' });
+    } else if (data.length < 5) {
+      setErrors({
+        ...errors,
+        passwordError: 'Password must have a minimum length of 5',
+      });
     } else {
       setErrors({ ...errors, passwordError: '' });
     }
-  }
+  };
 
   return (
     <Box
@@ -91,43 +100,45 @@ const Auth = () => {
       alignItems="center"
     >
       <img src={logo} className="App-logo" alt="logo" />
-      <Box
-        component="form"
-        onSubmit={onSubmit}
-      >
+      <Box component="form" onSubmit={onSubmit}>
         <TextField
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            id="username"
-            label="Username"
-            name="username"
-            onChange={usernameOnChange}
-            error={errors.usernameError !== ''}
-            helperText={errors.usernameError}
-            autoFocus
-          />
-          <TextField
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            onChange={passwordOnChange}
-            error={errors.passwordError !== ''}
-            helperText={errors.passwordError}
-          />
-          <Box>
-            {!auth.loading ? (
-              <Button fullWidth color="primary" variant="contained" type="submit">
-                Login
-              </Button>
-            ) : (
-              <LinearProgress/>
-            )}
-          </Box>
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          id="username"
+          label="Username"
+          name="username"
+          onChange={usernameOnChange}
+          error={errors.usernameError !== ''}
+          helperText={errors.usernameError}
+          autoFocus
+        />
+        <TextField
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          onChange={passwordOnChange}
+          error={errors.passwordError !== ''}
+          helperText={errors.passwordError}
+        />
+        <Box>
+          {!auth.loading ? (
+            <Button
+              fullWidth
+              color="primary"
+              variant="contained"
+              type="submit"
+            >
+              Login
+            </Button>
+          ) : (
+            <LinearProgress />
+          )}
+        </Box>
       </Box>
       {errors.apiError && (
         <Box color="red" margin="10px">
@@ -135,7 +146,7 @@ const Auth = () => {
         </Box>
       )}
       <Box color="green" margin="10px">
-        <Typography >Please login as arsalan:test123</Typography>
+        <Typography>Please login as arsalan:test123</Typography>
       </Box>
     </Box>
   );

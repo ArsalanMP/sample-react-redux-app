@@ -5,9 +5,7 @@ import './App.css';
 import Auth from './features/auth/Auth';
 import MainLayout from './components/MainLayout';
 
-
 const App = () => {
-
   return (
     <BrowserRouter>
       <Routes>
@@ -28,6 +26,6 @@ const App = () => {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

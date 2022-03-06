@@ -3,7 +3,7 @@ import { RootState } from '../../app/store';
 import { setMessage } from '../message/messageSlice';
 import { login } from './authAPI';
 import { IUserData } from './interface';
-import store from "store";
+import store from 'store';
 
 export interface AuthState {
   user: IUserData | undefined;
@@ -19,10 +19,10 @@ const initialState: AuthState = {
 
 export const loginAsync = createAsyncThunk(
   'auth/login',
-  async (userData: IUserData,{dispatch}) => {
+  async (userData: IUserData, { dispatch }) => {
     try {
       const response = await login(userData);
-      store.set("user", response);
+      store.set('user', response);
       return response;
     } catch (error: any) {
       dispatch(setMessage(error.message));
@@ -37,7 +37,7 @@ export const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = undefined;
-      store.remove("user");
+      store.remove('user');
     },
   },
   extraReducers: (builder) => {

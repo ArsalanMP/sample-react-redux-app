@@ -1,7 +1,11 @@
-
-import { Drawer, List, ListItem, ListItemText, makeStyles } from "@material-ui/core";
-import { useNavigate } from "react-router-dom";
-
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  makeStyles,
+} from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
 
 const SideDrawer = () => {
   const classes = useStyles();
@@ -18,19 +22,28 @@ const SideDrawer = () => {
         anchor="left"
       >
         <List>
-          <ListItem button onClick={()=>{
+          <ListItem
+            button
+            onClick={() => {
               navigate('/');
-            }}>
+            }}
+          >
             <ListItemText primary={'Data table'} />
           </ListItem>
-          <ListItem button onClick={()=>{
+          <ListItem
+            button
+            onClick={() => {
               navigate('/gallery');
-            }}>
+            }}
+          >
             <ListItemText primary={'Image gallery'} />
           </ListItem>
-          <ListItem button onClick={()=>{
+          <ListItem
+            button
+            onClick={() => {
               navigate('/todolist');
-            }}>
+            }}
+          >
             <ListItemText primary={'Todo list'} />
           </ListItem>
         </List>
