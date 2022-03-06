@@ -4,6 +4,7 @@ import './App.css';
 
 import Auth from './features/auth/Auth';
 import MainLayout from './components/MainLayout';
+import DataTable from './features/dataTable/DataTable';
 
 const App = () => {
   return (
@@ -19,7 +20,7 @@ const App = () => {
             </Suspense>
           }
         >
-          <Route path="/" element={<>Table</>} />
+          <Route path="/" element={<DataTable />} />
           <Route path="/gallery" element={<>Gallery</>} />
           <Route path="/todolist" element={<>TodoList</>} />
         </Route>
