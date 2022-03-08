@@ -11,9 +11,21 @@ import FilterList from '@material-ui/icons/FilterList';
 import FirstPage from '@material-ui/icons/FirstPage';
 import LastPage from '@material-ui/icons/LastPage';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { datatableState, getPostsAsync } from './dataTableSlice';
+import {
+  closeModals,
+  createPostAsync,
+  datatableState,
+  deletePostAsync,
+  getPostsAsync,
+  showCreateModal,
+  showDeleteModal,
+  showUpdateModal,
+  updatePostAsync,
+} from './dataTableSlice';
 import { IPost } from './interface';
 import { clearMessage, message } from '../message/messageSlice';
+import DeleteModal from './DeleteModal';
+import PostFormModal from './PostFormModal';
 
 const tableIcons = {
   Filter: forwardRef<SVGSVGElement, {}>((props, ref) => (
@@ -36,9 +48,15 @@ const tableIcons = {
   )),
 };
 
-const Auth = () => {
+const DataTable = () => {
   const dispatch = useAppDispatch();
-  const tableState = useAppSelector(datatableState);
+  const {
+    posts,
+    openPostFormModal,
+    openDeleteModal,
+    loading,
+    selectedPost,
+  } = useAppSelector(datatableState);
   const messageValue = useAppSelector(message);
 
   useEffect(() => {
@@ -50,7 +68,7 @@ const Auth = () => {
     alert(messageValue);
   }
 
-  const editablePosts = tableState.posts.map((o: IPost) => ({
+  const editablePosts = posts.map((o: IPost) => ({
     ...o,
   }));
 
@@ -59,28 +77,28 @@ const Auth = () => {
       <MaterialTable
         icons={tableIcons}
         title="Data table"
-        isLoading={tableState.loading}
+        isLoading={loading}
         actions={[
           {
             icon: () => <Edit color="primary" />,
             tooltip: 'Edit Post',
             onClick: (event, rowData) => {
-              alert('You want to edit ' + (rowData as IPost).title);
+              dispatch(showUpdateModal(rowData as IPost));
             },
           },
           {
             icon: () => <DeleteOutline color="secondary" />,
-            tooltip: 'Delete User',
+            tooltip: 'Delete Post',
             onClick: (event, rowData) => {
-              alert('You want to delete ' + (rowData as IPost).title);
+              dispatch(showDeleteModal(rowData as IPost));
             },
           },
           {
             icon: () => <AddBox color="primary" />,
             tooltip: 'Create Post',
             position: 'toolbar',
-            onClick: (event, rowData) => {
-              // Do save operation
+            onClick: (event) => {
+              dispatch(showCreateModal());
             },
           },
         ]}
@@ -110,8 +128,38 @@ const Auth = () => {
           toolbar: true,
         }}
       />
+      {openDeleteModal && (
+        <DeleteModal
+          itemTitle={selectedPost?.title ?? ''}
+          handleCancel={() => {
+            dispatch(closeModals(true));
+          }}
+          handleConfirm={() => {
+            if (selectedPost) {
+              dispatch(deletePostAsync(selectedPost));
+            }
+            dispatch(closeModals(false));
+          }}
+        />
+      )}
+      {openPostFormModal && (
+        <PostFormModal
+          post={selectedPost}
+          handleCancel={() => {
+            dispatch(closeModals(true));
+          }}
+          handleSubmit={(newPost: IPost) => {
+            if (selectedPost && newPost.id !== -1) {
+              dispatch(updatePostAsync(newPost));
+            } else {
+              dispatch(createPostAsync(newPost));
+            }
+            dispatch(closeModals(false));
+          }}
+        />
+      )}
     </Box>
   );
 };
 
-export default Auth;
+export default DataTable;

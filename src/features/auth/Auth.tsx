@@ -43,16 +43,16 @@ const Auth = () => {
     return <Navigate to="/" />;
   }
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setErrors({ ...errors, apiError: '' });
-    const loginData: IUserData = {
-      username: formData.username,
-      password: formData?.password,
-    };
+  const onSubmitForm = () => {
+    if (!errors.usernameError && !errors.passwordError) {
+      setErrors({ ...errors, apiError: '' });
+      const loginData: IUserData = {
+        username: formData.username,
+        password: formData?.password,
+      };
 
-    dispatch(loginAsync(loginData));
+      dispatch(loginAsync(loginData));
+    }
   };
 
   const usernameOnChange = (e: any) => {
@@ -100,7 +100,7 @@ const Auth = () => {
       alignItems="center"
     >
       <img src={logo} className="App-logo" alt="logo" />
-      <Box component="form" onSubmit={onSubmit}>
+      <Box>
         <TextField
           fullWidth
           variant="outlined"
@@ -108,6 +108,7 @@ const Auth = () => {
           id="username"
           label="Username"
           name="username"
+          value={formData.username}
           onChange={usernameOnChange}
           error={errors.usernameError !== ''}
           helperText={errors.usernameError}
@@ -121,6 +122,7 @@ const Auth = () => {
           label="Password"
           type="password"
           id="password"
+          value={formData.password}
           onChange={passwordOnChange}
           error={errors.passwordError !== ''}
           helperText={errors.passwordError}
@@ -131,7 +133,7 @@ const Auth = () => {
               fullWidth
               color="primary"
               variant="contained"
-              type="submit"
+              onClick={onSubmitForm}
             >
               Login
             </Button>
