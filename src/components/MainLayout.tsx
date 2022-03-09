@@ -1,12 +1,18 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { Box } from '@material-ui/core';
-import { useAppSelector } from '../app/hooks';
+import { Box, Snackbar } from '@material-ui/core';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { authState } from '../features/auth/authSlice';
 import Drawer from './Drawer';
+import {
+  messageState,
+  setMessage,
+} from '../features/message/messageSlice';
 
 const MainLayout = () => {
   let location = useLocation();
 
+  const dispatch = useAppDispatch();
+  const messageValue = useAppSelector(messageState);
   const auth = useAppSelector(authState);
 
   if (auth.user === undefined) {
@@ -22,6 +28,15 @@ const MainLayout = () => {
         <Box flex={1}>
           <Outlet />
         </Box>
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          autoHideDuration={5000}
+          open={messageValue !== ''}
+          onClose={() => {
+            dispatch(setMessage(''));
+          }}
+          message={messageValue}
+        />
       </Box>
     </>
   );

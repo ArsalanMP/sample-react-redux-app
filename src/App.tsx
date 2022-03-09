@@ -5,6 +5,7 @@ import './App.css';
 import Auth from './features/auth/Auth';
 import MainLayout from './components/MainLayout';
 import DataTable from './features/dataTable/DataTable';
+import Gallery from './features/gallery/Gallery';
 
 const App = () => {
   return (
@@ -21,7 +22,7 @@ const App = () => {
           }
         >
           <Route path="/" element={<DataTable />} />
-          <Route path="/gallery" element={<>Gallery</>} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/todolist" element={<>TodoList</>} />
         </Route>
       </Routes>

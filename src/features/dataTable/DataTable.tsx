@@ -23,7 +23,6 @@ import {
   updatePostAsync,
 } from './dataTableSlice';
 import { IPost } from './interface';
-import { clearMessage, message } from '../message/messageSlice';
 import DeleteModal from './DeleteModal';
 import PostFormModal from './PostFormModal';
 
@@ -57,16 +56,10 @@ const DataTable = () => {
     loading,
     selectedPost,
   } = useAppSelector(datatableState);
-  const messageValue = useAppSelector(message);
 
   useEffect(() => {
     dispatch(getPostsAsync());
   }, []);
-
-  if (messageValue) {
-    dispatch(clearMessage());
-    alert(messageValue);
-  }
 
   const editablePosts = posts.map((o: IPost) => ({
     ...o,

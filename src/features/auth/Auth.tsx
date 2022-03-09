@@ -12,7 +12,7 @@ import logo from '../../logo.svg';
 import { authState, loginAsync } from './authSlice';
 import { IUserData } from './interface';
 
-import { clearMessage, message } from '../message/messageSlice';
+import { clearMessage, messageState } from '../message/messageSlice';
 
 const initialLoginData: IUserData = Object.freeze({
   username: '',
@@ -28,7 +28,7 @@ const initialErrorState = Object.freeze({
 const Auth = () => {
   const dispatch = useAppDispatch();
   const auth = useAppSelector(authState);
-  const messageValue = useAppSelector(message);
+  const messageValue = useAppSelector(messageState);
   const [formData, setFormData] = React.useState(initialLoginData);
   const [errors, setErrors] = useState(initialErrorState);
 

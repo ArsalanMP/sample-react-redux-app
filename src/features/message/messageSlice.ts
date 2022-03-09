@@ -26,6 +26,6 @@ const { reducer, actions } = messageSlice;
 
 export const { setMessage, clearMessage } = actions;
 
-export const message = (state: RootState) => state.message.value;
+export const messageState = (state: RootState) => state.message.value;
 
 export default reducer;
