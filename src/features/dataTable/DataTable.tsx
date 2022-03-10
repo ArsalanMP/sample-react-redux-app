@@ -5,7 +5,7 @@ import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
-import DeleteOutline from '@material-ui/icons/DeleteOutline';
+import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
 import FilterList from '@material-ui/icons/FilterList';
 import FirstPage from '@material-ui/icons/FirstPage';
@@ -23,7 +23,7 @@ import {
   updatePostAsync,
 } from './dataTableSlice';
 import { IPost } from './interface';
-import DeleteModal from './DeleteModal';
+import DeleteModal from '../../components/DeleteModal';
 import PostFormModal from './PostFormModal';
 
 const tableIcons = {
@@ -80,7 +80,7 @@ const DataTable = () => {
             },
           },
           {
-            icon: () => <DeleteOutline color="secondary" />,
+            icon: () => <Delete color="secondary" />,
             tooltip: 'Delete Post',
             onClick: (event, rowData) => {
               dispatch(showDeleteModal(rowData as IPost));

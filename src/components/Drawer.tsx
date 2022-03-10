@@ -41,10 +41,10 @@ const SideDrawer = () => {
           <ListItem
             button
             onClick={() => {
-              navigate('/todolist');
+              navigate('/taskslist');
             }}
           >
-            <ListItemText primary={'Todo list'} />
+            <ListItemText primary={'Tasks list'} />
           </ListItem>
         </List>
       </Drawer>

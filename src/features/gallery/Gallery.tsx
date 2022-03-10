@@ -28,7 +28,7 @@ const Gallery = () => {
   useEffect(() => {
     const doSearch = debounce(async () => {
       dispatch(getPhotosAsync(query));
-    }, 2000);
+    }, 800);
     if (query.length === 0 || query.length > 2) {
       doSearch();
     }
@@ -42,15 +42,9 @@ const Gallery = () => {
   };
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      width="100%"
-      height="100%"
-    >
+    <Box display="flex" flexDirection="column" margin={4}>
       <Box>
         <TextField
-          className={classes.margin}
           label="Search photos"
           value={query}
           onChange={searchInputChange}
@@ -65,7 +59,7 @@ const Gallery = () => {
       </Box>
 
       {!loading ? (
-        <Box className={classes.gallery}>
+        <Box className={classes.gallery} marginTop={2}>
           {photos.length > 0 ? (
             <ImageList rowHeight={400} cols={3}>
               {photos.map((photo) => (
@@ -86,7 +80,9 @@ const Gallery = () => {
             </ImageList>
           ) : (
             <Typography>
-              There is no photo related to '{query}'
+              {`There is no photo ${
+                query ? `related to '${query}'` : ''
+              }`}
             </Typography>
           )}
         </Box>
@@ -100,21 +96,12 @@ const Gallery = () => {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     gallery: {
-      width: '100%',
-      height: '100%',
       display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-around',
-      boxSizing: 'border-box',
-      overflow: 'hidden',
       backgroundColor: theme.palette.background.paper,
     },
     progress: {
       margin: 'auto',
       marginTop: theme.spacing(5),
-    },
-    margin: {
-      margin: theme.spacing(1),
     },
   })
 );
